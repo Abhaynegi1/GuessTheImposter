@@ -4,70 +4,61 @@ import { motion } from 'framer-motion';
 const HowToPlay = ({ close }) => {
   return (
     <motion.div 
-      className="w-full max-w-2xl bg-gradient-to-br from-purple-900 to-blue-900 rounded-2xl p-6 border-2 border-yellow-400 shadow-2xl relative overflow-hidden"
-      initial={{ scale: 0.9, opacity: 0 }}
+      className="w-full max-w-2xl bg-gray-900 rounded-xl p-6 border border-gray-700 shadow-xl relative"
+      initial={{ scale: 0.95, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
-      exit={{ scale: 0.9, opacity: 0 }}
-      transition={{ duration: 0.3 }}
+      exit={{ scale: 0.95, opacity: 0 }}
+      transition={{ duration: 0.2 }}
     >
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-yellow-400"></div>
-      <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-blue-500/20 blur-xl"></div>
-      
       {/* Close button */}
       <button 
         onClick={() => close(false)}
-        className="absolute top-4 right-4 text-2xl text-yellow-400 hover:text-white transition-colors p-2 z-50 cursor-pointer"
+        className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors text-xl"
         aria-label="Close how to play"
       >
         ✕
       </button>
 
       {/* Content */}
-      <div className="relative z-10">
-        <h2 className="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-500">
-          How to Play Guess the Faker
+      <div className="pr-8">
+        <h2 className="text-2xl font-bold mb-6 text-white">
+          How to Play
         </h2>
         
-        <div className="mb-6 p-4 bg-yellow-400/10 rounded-lg border border-yellow-400/30">
-          <div className="flex items-center gap-2 text-yellow-300">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-            </svg>
-            <p className="font-medium">Best experienced on voice chat (Discord, Zoom, etc.) for live discussion during voting!</p>
-          </div>
+        <div className="mb-6 p-3 bg-gray-800 rounded-lg border border-gray-700">
+          <p className="text-gray-300 text-sm">💡 Best experienced on voice chat for live discussion during voting!</p>
         </div>
         
-        <div className="space-y-4 text-white/90">
-          <div className="flex items-start gap-3">
-            <div className="flex-shrink-0 mt-1 w-8 h-8 rounded-full bg-yellow-400/20 flex items-center justify-center text-yellow-400 font-bold">1</div>
+        <div className="space-y-5 text-gray-300">
+          <div className="flex gap-4">
+            <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 text-sm font-medium mt-0.5">1</div>
             <div>
-              <h3 className="text-xl font-semibold text-yellow-300">The Secret Imposter</h3>
-              <p>One random player becomes the <span className="text-red-400 font-medium">Imposter</span> but <span className="underline">doesn't know it yet</span>. Everyone receives the same question except the imposter, who gets a slightly different one.</p>
+              <h3 className="font-semibold text-white mb-1">Secret Imposter</h3>
+              <p className="text-sm leading-relaxed">One player becomes the <span className="text-gray-200">Imposter</span> but doesn't know it. Everyone gets the same question except the imposter gets a different one.</p>
             </div>
           </div>
 
-          <div className="flex items-start gap-3">
-            <div className="flex-shrink-0 mt-1 w-8 h-8 rounded-full bg-blue-400/20 flex items-center justify-center text-blue-400 font-bold">2</div>
+          <div className="flex gap-4">
+            <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 text-sm font-medium mt-0.5">2</div>
             <div>
-              <h3 className="text-xl font-semibold text-blue-300">Answer Phase</h3>
-              <p>All players answer their questions thinking they're legitimate. The <span className="text-red-400 font-medium">Imposter</span> answers naturally, unaware their question was different.</p>
+              <h3 className="font-semibold text-white mb-1">Answer Phase</h3>
+              <p className="text-sm leading-relaxed">All players answer naturally. The <span className="text-gray-200">Imposter</span> answers their different question, unaware it's not the real one.</p>
             </div>
           </div>
 
-          <div className="flex items-start gap-3">
-            <div className="flex-shrink-0 mt-1 w-8 h-8 rounded-full bg-purple-400/20 flex items-center justify-center text-purple-400 font-bold">3</div>
+          <div className="flex gap-4">
+            <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 text-sm font-medium mt-0.5">3</div>
             <div>
-              <h3 className="text-xl font-semibold text-purple-300">The Big Reveal</h3>
-              <p>The <span className="text-green-400 font-medium">real question</span> is shown alongside all answers. Now the <span className="text-red-400 font-medium">Imposter</span> must pretend they answered the real question!</p>
+              <h3 className="font-semibold text-white mb-1">The Reveal</h3>
+              <p className="text-sm leading-relaxed">The real question is revealed with all answers. Now the <span className="text-gray-200">Imposter</span> must pretend they answered correctly!</p>
             </div>
           </div>
 
-          <div className="flex items-start gap-3">
-            <div className="flex-shrink-0 mt-1 w-8 h-8 rounded-full bg-green-400/20 flex items-center justify-center text-green-400 font-bold">4</div>
+          <div className="flex gap-4">
+            <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 text-sm font-medium mt-0.5">4</div>
             <div>
-              <h3 className="text-xl font-semibold text-green-300">Voting Phase</h3>
-              <p>Players discuss and vote. The <span className="text-red-400 font-medium">Imposter</span> wins if they avoid detection, while others win if they correctly identify the faker!</p>
+              <h3 className="font-semibold text-white mb-1">Vote & Win</h3>
+              <p className="text-sm leading-relaxed">Discuss and vote. <span className="text-gray-200">Imposter</span> wins by avoiding detection, others win by finding the faker!</p>
             </div>
           </div>
         </div>
