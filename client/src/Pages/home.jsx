@@ -113,7 +113,7 @@ const Home = () => {
         {/* Title section */}
         <div className="text-center mb-4 md:mb-8 w-full px-4">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-            Guess the Faker
+            Guess the Imposter
           </h1>
           <p className="text-sm md:text-lg text-blue-300/80 tracking-wider">A game of deception and deduction</p>
         </div>  
