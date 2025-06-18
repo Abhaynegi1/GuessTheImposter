@@ -12,6 +12,8 @@ const Home = () => {
   const [roomCode, setRoomCode] = useState('')
   const [error, setError] = useState('')
   const [showAvatarModal, setShowAvatarModal] = useState(false)
+  const [isCreatingRoom, setIsCreatingRoom] = useState(false)
+  const [isJoiningRoom, setIsJoiningRoom] = useState(false)
   const navigate = useNavigate()
   const [showHowToPlay, setShowHowToPlay] = useState(false)
   const [cardShake, setCardShake] = useState(false)
@@ -29,7 +31,13 @@ const Home = () => {
 
   const handleCreate = () => {
     if (!validateInputs()) return
+    
+    setIsCreatingRoom(true)
+    setError('')
+    
     socket.emit('create-room', { nickname, avatar: selectedAvatar }, (response) => {
+      setIsCreatingRoom(false)
+      
       if (response?.error) {
         setError(response.error)
         setCardShake(true)
@@ -52,12 +60,17 @@ const Home = () => {
       return
     }
 
+    setIsJoiningRoom(true)
+    setError('')
+
     socket.emit('join-room', { 
       roomId: roomCode, 
       nickname, 
       avatar: selectedAvatar, 
       isCreator: false 
     }, (response) => {
+      setIsJoiningRoom(false)
+      
       if (response?.error) { 
         setError(response.error)
         setRoomInputShake(true)
@@ -69,8 +82,6 @@ const Home = () => {
       })
     })
   }
-
-
 
   const openAvatarModal = () => {
     setShowAvatarModal(true)
@@ -88,8 +99,8 @@ const Home = () => {
             <HiQuestionMarkCircle className='text-xl'/>
             <h2 className=''>how to play</h2>
         </div>
-
       </div>
+
       {/* Animated background elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {[...Array(20)].map((_, i) => (
@@ -194,9 +205,15 @@ const Home = () => {
               <div className="relative flex-1 group">
                 <div className="absolute inset-0 bg-purple-600 rounded-xl blur-md opacity-60 group-hover:opacity-80 transition-opacity"></div>
                 <Btn
-                  text={'CREATE ROOM'}
+                  text={isCreatingRoom ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      CREATING...
+                    </div>
+                  ) : 'CREATE ROOM'}
                   handle={handleCreate}
-                  className="relative w-full py-3 md:py-4 bg-gradient-to-br from-purple-700/90 to-purple-900/90 border-2 border-purple-400/80 hover:border-purple-300 text-white font-mono font-bold tracking-wider shadow-lg hover:scale-[1.02] transition-transform text-sm md:text-base"
+                  disabled={isCreatingRoom}
+                  className={`relative w-full py-3 md:py-4 bg-gradient-to-br from-purple-700/90 to-purple-900/90 border-2 border-purple-400/80 hover:border-purple-300 text-white font-mono font-bold tracking-wider shadow-lg hover:scale-[1.02] transition-transform text-sm md:text-base ${isCreatingRoom ? 'opacity-80 cursor-not-allowed' : ''}`}
                 />
               </div>
 
@@ -204,12 +221,17 @@ const Home = () => {
               <div className="relative flex-1 group">
                 <div className={`absolute inset-0 rounded-xl blur-md opacity-60 group-hover:opacity-80 transition-opacity`}></div>
                 <Btn
-                  text={'JOIN ROOM'}
+                  text={isJoiningRoom ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      JOINING...
+                    </div>
+                  ) : 'JOIN ROOM'}
                   handle={handleJoin}
                   style={false}
-                  dull={roomCode.length !== 5}
-                  disabled={roomCode.length !== 5}
-                  className={`relative w-full py-3 md:py-4 border-2 font-mono font-bold tracking-wider shadow-lg transition-transform text-sm md:text-base`}
+                  dull={roomCode.length !== 5 || isJoiningRoom}
+                  disabled={roomCode.length !== 5 || isJoiningRoom}
+                  className={`relative w-full py-3 md:py-4 border-2 font-mono font-bold tracking-wider shadow-lg transition-transform text-sm md:text-base ${isJoiningRoom ? 'opacity-80 cursor-not-allowed' : ''}`}
                 />
               </div>
             </div>
@@ -259,7 +281,6 @@ const Home = () => {
           </div>
         </div>
       )}
-
 
       {showHowToPlay && (
         <div className="w-screen h-screen bg-black/20 backdrop-blur-3xl fixed top-0 left-0 grid place-content-center z-40">

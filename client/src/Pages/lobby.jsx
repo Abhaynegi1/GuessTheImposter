@@ -103,10 +103,34 @@ const Lobby = () => {
     }, 2000)
   }
 
+  const handleExit = () => {
+    // Emit leave-room event to notify server
+    socket.emit('leave-room', { roomId })
+    
+    // Clear localStorage
+    localStorage.removeItem('nickname')
+    localStorage.removeItem('avatar')
+    localStorage.removeItem('isCreator')
+    
+    // Navigate back to home
+    navigate('/')
+  }
+
   const isCreator = localStorage.getItem('isCreator') === 'true'
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white p-6">
+      {/* Exit Button */}
+      <div className="absolute top-4 left-4 z-20">
+        <button
+          onClick={handleExit}
+          className="flex items-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 px-4 py-2 rounded-lg border border-red-500/30 hover:border-red-500/50 transition-all duration-200 font-medium"
+        >
+          <span className="text-lg">←</span>
+          Exit Lobby
+        </button>
+      </div>
+
       {/* Animated background elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         {[...Array(15)].map((_, i) => (
@@ -125,7 +149,7 @@ const Lobby = () => {
         ))}
       </div>
 
-      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-8 relative z-10">
+      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-8 relative z-10 pt-16">
         {/* Left Column - Room Info */}
         <div className="flex-1 bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-6 shadow-2xl">
           <div className="flex flex-col h-full">
